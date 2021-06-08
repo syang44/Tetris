@@ -1,0 +1,22 @@
+:root {
+    --width: 200px;
+    --height: 400px;
+}
+
+.grid {
+    width: var(--width);
+    height: var(--height);
+    background-color: yellow;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.grid div {
+    height: 20px;
+    width: 20px;
+
+}
+
+.tetrimino {
+    background-color: blue;
+}

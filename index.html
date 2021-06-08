@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="globals.js" charset="utf-8"></script>
+    <script type="module" src="app.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Tetris</title>
+</head>
+
+<body>
+
+    <h3>Score:<span id="score">0</span></h3>
+    <button id="startButton">Start/Pause</button>
+
+    <div class="gridSpecs" id="gridSpecs">
+        <label for="width">Width:</label>
+        <input id="widthInput" type="range" name="widthInput" min="5" max="15" value="10" data-sizing="px">
+        <span id="width">10</span>
+
+        <label for="height">Height:</label>
+        <input id="heightInput" type="range" name="heightInput" min="10" max="25" value="20" data-sizing="px">
+        <span id="height">20</span>
+    </div>
+
+    <div class="game">
+        <div class="grid" id="grid">
+            <!--<script type="module" src="app.js" charset="utf-8">
+                addDiv(10, 20);
+                </script>-->
+        </div>
+    </div>
+
+
+</body>
+
+</html>
