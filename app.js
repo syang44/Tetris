@@ -30,9 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreDisplay = document.querySelector('#score');
     const startButton = document.querySelector('#startButton');
 
-    //grid = document.querySelectorAll('.grid');
-    //squares = Array.from(document.querySelectorAll('.grid div'));
-    console.log(squares);
+    grid = document.querySelectorAll('.grid');
+    squares = Array.from(document.querySelectorAll('.grid div'));
+    console.log(squares, "eventListener");
 });
 
 //Update block placements when width changes
@@ -55,6 +55,12 @@ function addDiv(width, height) {
         elem = document.getElementById('block');
     }
 
+    var elem = document.getElementById('taken');
+    while (elem != null) {
+        elem.parentNode.removeChild(elem);
+        elem = document.getElementById('taken');
+    }
+
     //dynamically create new divs
     let size = width * height;
     for (let i = 0; i < size; i++) {
@@ -62,13 +68,21 @@ function addDiv(width, height) {
         newDiv.id = 'block';
         //append each div to parent grid
         document.getElementById('grid').appendChild(newDiv);
-
     }
+
+    //add "taken" divs
+    for (let i = 0; i < width; i++) {
+        let newDiv = document.createElement('div');
+        newDiv.id = 'taken';
+        newDiv.classList.add('taken');
+        document.getElementById('grid').appendChild(newDiv);
+    }
+
     //MAY NEED TO MOVE THIS TO GLOBAL
     //create array of square on the grid
     //grid = document.querySelectorAll('.grid');
     //squares = Array.from(document.querySelectorAll('.grid div'));
-    console.log(squares);
+    console.log(squares, "addDiv");
     //need to update block placement when grid changes
     updateBlocks();
 }
@@ -93,33 +107,37 @@ function updateGrid() {
 }
 
 //remove previous divs
-var elem = document.getElementById('block');
+/*var elem = document.getElementById('block');
 while (elem != null) {
     elem.parentNode.removeChild(elem);
     elem = document.getElementById('block');
-}
+}*/
 
 //dynamically create new divs
-let size = width * height;
+/*let size = width * height;
 for (let i = 0; i < size; i++) {
     let newDiv = document.createElement('div');
     //newDiv.id = 'block'; 
     //append each div to parent grid
     document.getElementById('grid').appendChild(newDiv);
 
-}
+}*/
 //MAY NEED TO MOVE THIS TO GLOBAL
 //create array of square on the grid
 var grid = document.querySelectorAll('.grid');
 var squares = Array.from(document.querySelectorAll('.grid div'));
-console.log(squares);
+
 //need to update block placement when grid changes
 updateBlocks();
 
-let currentPosition = 4
-let current = blocks[0][0];
+let currentPosition = 4;
+let currentRotation = 0;
 
-//Draw first rotation in first block
+//randomly select a tetromino and its rotation
+let random = Math.floor(Math.random() * blocks.length)
+let current = blocks[random][currentRotation];
+
+//Draw the tetromino
 function draw() {
     //Add class to each of the squares
     current.forEach(index => {
@@ -127,8 +145,37 @@ function draw() {
         console.log("test");
     });
 }
-//squares[0].classList.add("tetrimino");
-console.log("test", squares[6]);
-console.log(squares);
 
-draw();
+//undraw the tetronimo
+function undraw() {
+    current.forEach(index => {
+        squares[currentPosition + index].classList.remove('tetromino')
+    })
+}
+
+//draw();
+
+//make the tetromino move down every second
+let timerId = setInterval(moveDown, 1000);
+
+//move tetromino down
+function moveDown() {
+    undraw();
+    currentPosition += width;
+    draw();
+    freeze();
+}
+
+//stop tetromino from going down if it hits something 
+function freeze() {
+    if (current.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
+        current.forEach(index => squares[currentPosition + index].classList.add('taken'));
+        //start a new tetromino falling
+        random = Math.floor(Math.random() * blocks.length);
+        current = blocks[random][currentRotation];
+        currentPosition = 4;
+        draw();
+    }
+}
+
+console.log(squares);
