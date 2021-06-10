@@ -165,7 +165,7 @@ function control(e) {
             moveLeft();
             break;
         case 38:
-            //rotate();
+            rotate();
             break;
         case 39:
             moveRight();
@@ -231,5 +231,17 @@ function moveRight() {
         currentPosition -= 1;
     }
 
+    draw();
+}
+
+//rotate tetromino
+function rotate() {
+    undraw();
+    currentRotation++;
+    //if current rotation is 4, go back to original rotation
+    if (currentRotation === currentTetromino.length) {
+        currentRotation = 0;
+    }
+    currentTetromino = blocks[random][currentRotation];
     draw();
 }
