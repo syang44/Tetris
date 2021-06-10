@@ -18,7 +18,10 @@ from './globals.js';
 //var squares = Array.from(document.querySelectorAll('.grid div'));
 //console.log(squares);
 
+let nextRandom = 0;
+
 document.addEventListener('DOMContentLoaded', () => {
+    //let nextRandom = 0;
     //initial starting width and height
     addDiv(width, height);
 
@@ -176,7 +179,7 @@ function control(e) {
     }
 }
 
-document.addEventListener('keyup', control);
+document.addEventListener('keydown', control);
 
 //move tetromino down
 function moveDown() {
@@ -191,10 +194,12 @@ function freeze() {
     if (currentTetromino.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
         currentTetromino.forEach(index => squares[currentPosition + index].classList.add('taken'));
         //start a new tetromino falling
-        random = Math.floor(Math.random() * blocks.length);
+        random = nextRandom;
+        nextRandom = Math.floor(Math.random() * blocks.length);
         currentTetromino = blocks[random][currentRotation];
         currentPosition = 4;
         draw();
+        displayShape();
     }
 }
 
@@ -244,4 +249,30 @@ function rotate() {
     }
     currentTetromino = blocks[random][currentRotation];
     draw();
+}
+
+//display next tetromino in miniGrid
+const displaySquares = document.querySelectorAll('.miniGrid div');
+const displayWidth = 4;
+let displayIndex = 0;
+
+//the tetrominos without rotations
+const nextTetrominos = [
+    [1, displayWidth + 1, displayWidth * 2 + 1, 2], //L Tetromino
+    [0, displayWidth, displayWidth + 1, displayWidth * 2 + 1], //Z Tetromino
+    [1, displayWidth, displayWidth + 1, displayWidth + 2], //T Tetromino
+    [0, 1, displayWidth, displayWidth + 1], //O Tetromino
+    [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1] //I Tetromino
+]
+
+//dispaly next shape in miniGrid
+function displayShape() {
+    //remove tetromino from entire grid
+    displaySquares.forEach(square => {
+        square.classList.remove('tetromino');
+    });
+
+    nextTetrominos[nextRandom].forEach(index => {
+        displaySquares[displayIndex + index].classList.add('tetromino');
+    })
 }

@@ -26,12 +26,23 @@
         <span id="height">20</span>
     </div>
 
-    <div class="game">
+    <div class="container">
+        <!--<div class="game">-->
         <div class="grid" id="grid">
             <!--grid squares get dynamically added here-->
         </div>
-    </div>
+        <!--</div>-->
 
+        <div class="miniGrid" id="miniGrid">
+            <script>
+                for (let i = 0; i < 16; i++) {
+                    let newDiv = document.createElement('div');
+                    document.getElementById('miniGrid').appendChild(newDiv);
+                }
+            </script>
+
+        </div>
+    </div>
 
 </body>
 
