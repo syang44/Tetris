@@ -135,12 +135,12 @@ let currentRotation = 0;
 
 //randomly select a tetromino and its rotation
 let random = Math.floor(Math.random() * blocks.length)
-let current = blocks[random][currentRotation];
+let currentTetromino = blocks[random][currentRotation];
 
 //Draw the tetromino
 function draw() {
     //Add class to each of the squares
-    current.forEach(index => {
+    currentTetromino.forEach(index => {
         squares[currentPosition + index].classList.add('tetromino');
         console.log("test");
     });
@@ -148,7 +148,7 @@ function draw() {
 
 //undraw the tetronimo
 function undraw() {
-    current.forEach(index => {
+    currentTetromino.forEach(index => {
         squares[currentPosition + index].classList.remove('tetromino')
     })
 }
@@ -157,6 +157,26 @@ function undraw() {
 
 //make the tetromino move down every second
 let timerId = setInterval(moveDown, 1000);
+
+//assign functions to keyCodes
+function control(e) {
+    switch (e.keyCode) {
+        case 37:
+            moveLeft();
+            break;
+        case 38:
+            //rotate();
+            break;
+        case 39:
+            moveRight();
+            break;
+        case 40:
+            moveDown();
+            break;
+    }
+}
+
+document.addEventListener('keyup', control);
 
 //move tetromino down
 function moveDown() {
@@ -168,14 +188,48 @@ function moveDown() {
 
 //stop tetromino from going down if it hits something 
 function freeze() {
-    if (current.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
-        current.forEach(index => squares[currentPosition + index].classList.add('taken'));
+    if (currentTetromino.some(index => squares[currentPosition + index + width].classList.contains('taken'))) {
+        currentTetromino.forEach(index => squares[currentPosition + index].classList.add('taken'));
         //start a new tetromino falling
         random = Math.floor(Math.random() * blocks.length);
-        current = blocks[random][currentRotation];
+        currentTetromino = blocks[random][currentRotation];
         currentPosition = 4;
         draw();
     }
 }
 
-console.log(squares);
+//move tetromino left unless it's at the edge or if theres a block
+function moveLeft() {
+    undraw();
+
+    //check if tetronimo is at the left edge
+    const isAtLeftEdge = currentTetromino.some(index => (currentPosition + index) % width === 0);
+
+    //if not at left edge, move left by 1
+    if (!isAtLeftEdge) currentPosition -= 1;
+
+    //stop tetromino from going left if it is going into spaces that area already occupied
+    if (currentTetromino.some(index => squares[currentPosition + index].classList.contains('taken'))) {
+        currentPosition += 1;
+    }
+
+    draw();
+}
+
+//move tetromino right unless it's at the edge or if theres a block
+function moveRight() {
+    undraw();
+
+    //check if tetronimo is at the right edge
+    const isAtRightEdge = currentTetromino.some(index => (currentPosition + index) % width === width - 1);
+
+    //if not at right edge, move right by 1
+    if (!isAtRightEdge) currentPosition += 1;
+
+    //stop tetromino from going right if it is going into spaces that area already occupied
+    if (currentTetromino.some(index => squares[currentPosition + index].classList.contains('taken'))) {
+        currentPosition -= 1;
+    }
+
+    draw();
+}
