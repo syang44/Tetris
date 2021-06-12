@@ -23,6 +23,7 @@ from './globals.js';
 document.addEventListener('DOMContentLoaded', () => {
     let nextRandom = 0;
     let timerId;
+    let score = 0;
     //initial starting width and height
     addDiv(width, height);
 
@@ -200,6 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPosition = 4;
             draw();
             displayShape();
+            addScore();
         }
     }
 
@@ -288,5 +290,33 @@ document.addEventListener('DOMContentLoaded', () => {
             nextRandom = Math.floor(Math.random() * blocks.length);
         }
     });
+
+    //add score
+    function addScore() {
+        for (let i = 0; i < (width * height); i += width) {
+            //add every square in a row
+            const row = [];
+            for (let j = 0; j < width; j++) {
+                row.push(i + j);
+            }
+
+            //check if every square in the row is occupied
+            if (row.every(index => squares[index].classList.contains('taken'))) {
+                score += 10;
+                scoreDisplay.innerHTML = score;
+                //remove classes taken and tetromino to restore
+                row.forEach(index => {
+                    squares[index].classList.remove('taken');
+                    squares[index].classList.remove('tetromino');
+                });
+
+                //remove full row
+                const squaresRemoved = squares.splice(i, width);
+                //replace row (full row is moved to the top of the grid)
+                squares = squaresRemoved.concat(squares);
+                squares.forEach(cell => document.getElementById('grid').appendChild(cell));
+            }
+        }
+    }
 
 });
