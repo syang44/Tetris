@@ -3,16 +3,42 @@
     --height: 400px;
 }
 
+body {
+    background: radial-gradient(#a8c7c2, #31ceb6);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h1 {
+    text-align: center;
+    text-shadow: 2px 2px #a8c7c2;
+    font-size: 50px;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    font-weight: 100;
+}
+
+p {
+    white-space: nowrap;
+}
+
+button {
+    background-color: #f55e72;
+    border-radius: 3px;
+}
+
 .container {
     display: flex;
+    justify-content: center;
+
 }
 
 .grid {
     width: var(--width);
     height: var(--height);
-    background-color: yellow;
+    background-color: #61a197;
     display: flex;
     flex-wrap: wrap;
+    border-radius: 3px;
 }
 
 .grid div {
@@ -22,7 +48,8 @@
 }
 
 .tetromino {
-    background-color: blue;
+    border-radius: 2px;
+
 }
 
 .miniGrid {
@@ -31,7 +58,9 @@
     height: 80px;
     display: flex;
     flex-wrap: wrap;
-    background-color: yellow;
+    background-color: #61a197;
+    border-radius: 2px;
+    ;
 }
 
 .miniGrid div {

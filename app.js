@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let nextRandom = 0;
     let timerId;
     let score = 0;
+    let lines = 0;
     const colors = ['red', 'blue', 'orange', 'green', 'purple'];
     //initial starting width and height
     addDiv(width, height);
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //get score and start button
     const scoreDisplay = document.querySelector('#score');
+    const lineDisplay = document.querySelector('#lines');
     const startButton = document.querySelector('#startButton');
 
     grid = document.querySelectorAll('.grid');
@@ -312,6 +314,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (row.every(index => squares[index].classList.contains('taken'))) {
                 score += 10;
                 scoreDisplay.innerHTML = score;
+                lines += 1;
+                lineDisplay.innerHTML = lines;
                 //remove classes taken and tetromino to restore
                 row.forEach(index => {
                     squares[index].classList.remove('taken');

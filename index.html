@@ -13,8 +13,12 @@
 
 <body>
 
-    <h3>Score: <span id="score">0</span></h3>
-    <button id="startButton">Start/Pause</button>
+    <h1>Tetris</h1>
+
+    <!--<p>Score: <span id="score">0</span></p>
+    <p>Level: <span id="level">1</span></p>
+    <p>Lines: <span id="level">0</span></p>
+    <button id="startButton">Start/Pause</button>-->
 
     <div class="gridSpecs" id="gridSpecs">
         <label for="width">Width:</label>
@@ -40,6 +44,15 @@
                     document.getElementById('miniGrid').appendChild(newDiv);
                 }
             </script>
+
+            <div class="status">
+                <p>Score: <span id="score">0</span></p>
+                <p>Level: <span id="level">1</span></p>
+                <p>Lines: <span id="lines">0</span></p>
+                <button id="startButton">Start/Pause</button>
+            </div>
+
+
 
         </div>
     </div>
