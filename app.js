@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
             squares[currentPosition + index].classList.add('tetromino');
             squares[currentPosition + index].style.backgroundColor = colors[random];
         });
-        displayShape();
+        //displayShape();
     }
 
     //undraw the tetronimo
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //display next tetromino in miniGrid
     const displaySquares = document.querySelectorAll('.miniGrid div');
     const displayWidth = 4;
-    let displayIndex = 0;
+    const displayIndex = 0;
 
     //the tetrominos without rotations
     const nextTetrominos = [
@@ -296,6 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
             timerId = setInterval(moveDown, 1000);
             nextRandom = Math.floor(Math.random() * blocks.length);
         }
+        displayShape();
     });
 
     //add score
