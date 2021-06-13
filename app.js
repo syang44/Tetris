@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let timerId;
     let score = 0;
     let lines = 0;
+    let level = 1;
+    let speed = 1000;
     const colors = ['red', 'blue', 'orange', 'green', 'purple'];
     //initial starting width and height
     addDiv(width, height);
@@ -33,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //get score and start button
     const scoreDisplay = document.querySelector('#score');
     const lineDisplay = document.querySelector('#lines');
+    const levelDisplay = document.querySelector('#level');
     const startButton = document.querySelector('#startButton');
 
     grid = document.querySelectorAll('.grid');
@@ -319,8 +322,8 @@ document.addEventListener('DOMContentLoaded', () => {
             timerId = null;
         } else {
             draw();
-            timerId = setInterval(moveDown, 1000);
-            nextRandom = Math.floor(Math.random() * blocks.length);
+            timerId = setInterval(moveDown, speed);
+            //nextRandom = Math.floor(Math.random() * blocks.length);
         }
         displayShape();
     });
@@ -336,10 +339,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //check if every square in the row is occupied
             if (row.every(index => squares[index].classList.contains('taken'))) {
+                //update score
                 score += 10;
                 scoreDisplay.innerHTML = score;
+                //update lines
                 lines += 1;
                 lineDisplay.innerHTML = lines;
+                //update level
+                if (score % 100 === 0) { //CHANGE THRESHOLD
+                    level++;
+                    levelDisplay.innerHTML = level;
+                    //increase speed at which tetrominos fall
+                    speed -= 100;
+                    clearInterval(timerId);
+                    timerId = setInterval(moveDown, speed);
+                    console.log(speed);
+                    console.log(timerId)
+
+                }
+
+
                 //remove classes taken and tetromino to restore
                 row.forEach(index => {
                     squares[index].classList.remove('taken');
