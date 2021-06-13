@@ -1,3 +1,6 @@
+//Code adapted from Copyright (c) 2020 Ania Kubow
+//Differences: html layout, css styling, dynamic width/height, levels, lines, globals.js
+
 import {
     lBlock,
     width,
@@ -13,12 +16,6 @@ import {
     setBlocks
 }
 from './globals.js';
-
-//var grid = document.querySelectorAll('.grid');
-//var squares = Array.from(document.querySelectorAll('.grid div'));
-//console.log(squares);
-
-
 
 document.addEventListener('DOMContentLoaded', () => {
     let nextRandom = 0;
@@ -248,6 +245,32 @@ document.addEventListener('DOMContentLoaded', () => {
         draw();
     }
 
+    //check if tetromino is at right edge
+    function atRight() {
+        return currentTetromino.some(index => (currentPosition + index + 1) % width === 0);
+    }
+
+    //check if tetromino is at left edge
+    function atLeft() {
+        return currentTetromino.some(index => (currentPosition + index) % width === 0);
+    }
+
+    function checkRotatedPosition(p) {
+        p = p || currentPosition;
+        if ((p + 1) % width < 4) {
+            //if at right edge, add 1 to wrap it back around
+            if (atRight()) {
+                currentPosition += 1;
+                checkRotatedPosition(p); //need to check again
+            }
+        } else if (p % width > 5) {
+            if (atLeft()) {
+                currentPosition -= 1;
+                checkRotatedPosition(p);
+            }
+        }
+    }
+
     //rotate tetromino
     function rotate() {
         undraw();
@@ -257,6 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentRotation = 0;
         }
         currentTetromino = blocks[random][currentRotation];
+        checkRotatedPosition();
         draw();
     }
 
