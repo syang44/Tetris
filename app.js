@@ -1,5 +1,5 @@
 //Code adapted from Copyright (c) 2020 Ania Kubow
-//Differences: html layout, css styling, dynamic width/height, levels, lines, globals.js
+//Differences: html layout, css styling, dynamic width/height, levels, lines, restart game, globals.js
 
 import {
     lBlock,
@@ -153,7 +153,6 @@ document.addEventListener('DOMContentLoaded', () => {
             squares[currentPosition + index].classList.add('tetromino');
             squares[currentPosition + index].style.backgroundColor = colors[random];
         });
-        //displayShape();
     }
 
     //undraw the tetronimo
@@ -163,11 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
             squares[currentPosition + index].style.backgroundColor = '';
         })
     }
-
-    //draw();
-
-    //make the tetromino move down every second
-    //timerId = setInterval(moveDown, 1000);
 
     //assign functions to keyCodes
     function control(e) {
@@ -354,11 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     speed -= 100;
                     clearInterval(timerId);
                     timerId = setInterval(moveDown, speed);
-                    console.log(speed);
-                    console.log(timerId)
-
                 }
-
 
                 //remove classes taken and tetromino to restore
                 row.forEach(index => {
@@ -384,22 +374,56 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function toggleButton() {
+    function toggleStart() {
         let inputs = document.getElementById("gridSpecs");
         if (inputs.style.display === "none") {
             inputs.style.display = "block";
-            console.log("disp");
         } else {
             inputs.style.display = "none";
-            console.log("hide");
         }
     }
 
     let inputs = document.getElementById("startButton");
-    inputs.addEventListener('click', toggleButton);
+    inputs.addEventListener('click', toggleStart);
 
     function resetGame() {
-        console.log('reset');
+        //remove all tetrominos from main grid
+        for (let i = 0; i < (width * height); i++) {
+            squares[i].classList.remove('taken');
+            squares[i].classList.remove('tetromino');
+            squares[i].style.backgroundColor = '';
+        }
+        //remove all tetrominos from mini grid
+        for (let i = 0; i < (displayWidth * displayWidth); i++) {
+            displaySquares[i].classList.remove('taken');
+            displaySquares[i].classList.remove('tetromino');
+            displaySquares[i].style.backgroundColor = '';
+        }
+
+        //reset score
+        score = 0;
+        scoreDisplay.innerHTML = score;
+
+        //reset lines
+        lines = 0;
+        lineDisplay.innerHTML = lines;
+
+        //reset level
+        level = 1;
+        levelDisplay.innerHTML = level;
+
+        //clear timer
+        speed = 1000;
+        clearInterval(timerId);
+
+        //reset falling tetromino
+        currentPosition = 4;
+        currentRotation = 0;
+
+        //randomly select a tetromino and its rotation
+        random = Math.floor(Math.random() * blocks.length)
+        currentTetromino = blocks[random][currentRotation];
+
     }
 
     let reset = document.getElementById("resetButton");
