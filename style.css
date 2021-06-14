@@ -21,6 +21,10 @@ p {
     white-space: nowrap;
 }
 
+label {
+    white-space: nowrap;
+}
+
 button {
     background-color: #f55e72;
     border-radius: 3px;
@@ -60,10 +64,23 @@ button {
     flex-wrap: wrap;
     background-color: #61a197;
     border-radius: 2px;
-    ;
+
 }
 
 .miniGrid div {
     height: 20px;
     width: 20px;
+}
+
+.control {
+    margin-right: 50px;
+}
+
+.gridSpecs {
+    padding-top: 20px;
+    width: 100px;
+}
+
+input[type="range"] {
+    width: 100px;
 }

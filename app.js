@@ -17,6 +17,7 @@ import {
 }
 from './globals.js';
 
+
 document.addEventListener('DOMContentLoaded', () => {
     let nextRandom = 0;
     let timerId;
@@ -29,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     addDiv(width, height);
 
     //Update width and height after user change
-    let container = document.getElementById("gridSpecs");
+    let container = document.getElementById("control");
     container.addEventListener('input', updateGrid);
 
     //get score and start button
@@ -382,5 +383,26 @@ document.addEventListener('DOMContentLoaded', () => {
             clearInterval(timerId);
         }
     }
+
+    function toggleButton() {
+        let inputs = document.getElementById("gridSpecs");
+        if (inputs.style.display === "none") {
+            inputs.style.display = "block";
+            console.log("disp");
+        } else {
+            inputs.style.display = "none";
+            console.log("hide");
+        }
+    }
+
+    let inputs = document.getElementById("startButton");
+    inputs.addEventListener('click', toggleButton);
+
+    function resetGame() {
+        console.log('reset');
+    }
+
+    let reset = document.getElementById("resetButton");
+    reset.addEventListener('click', resetGame);
 
 });
