@@ -1,16 +1,16 @@
 //File with global variables and mutators
 
 //width & height of grid
-let width = 10;
-let height = 20;
+var width = 10;
+var height = 20;
 
 //Mutators to change width and height
 function setWidth(value) {
-    width = value;
+    width = parseInt(value); //must be integers
 }
 
 function setHeight(value) {
-    height = value;
+    height = parseInt(value); //must be integers
 }
 
 

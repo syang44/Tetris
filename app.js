@@ -99,11 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
     //Update current width/height of grid
     function updateGrid() {
         //Get new value of width and height
+
         setWidth(document.getElementById("widthInput").value);
         document.getElementById("width").innerHTML = width;
         setHeight(document.getElementById("heightInput").value);
         document.getElementById("height").innerHTML = height;
-
+        console.log(typeof width);
+        console.log(typeof height, "we");
         //create divs for each cell
         addDiv(width, height);
 
@@ -133,13 +135,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }*/
     //MAY NEED TO MOVE THIS TO GLOBAL
     //create array of square on the grid
+    'use strict';
     var grid = document.querySelectorAll('.grid');
     var squares = Array.from(document.querySelectorAll('.grid div'));
 
     //need to update block placement when grid changes
-    updateBlocks();
+    //updateBlocks();
 
-    let currentPosition = 4; //represents where the block starts falling
+    var currentPosition = Math.floor(width / 2 - 1); //represents where the block starts falling
     let currentRotation = 0;
 
     //randomly select a tetromino and its rotation
@@ -149,6 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
     //Draw the tetromino
     function draw() {
         //Add class to each of the squares
+        console.log(squares, currentPosition);
+        console.log(typeof currentPosition);
+        parseInt(currentPosition);
+        console.log(typeof currentPosition);
         currentTetromino.forEach(index => {
             squares[currentPosition + index].classList.add('tetromino');
             squares[currentPosition + index].style.backgroundColor = colors[random];
@@ -157,6 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //undraw the tetronimo
     function undraw() {
+        console.log("undraw", typeof currentPosition, currentPosition);
         currentTetromino.forEach(index => {
             squares[currentPosition + index].classList.remove('tetromino')
             squares[currentPosition + index].style.backgroundColor = '';
@@ -186,7 +194,10 @@ document.addEventListener('DOMContentLoaded', () => {
     //move tetromino down
     function moveDown() {
         undraw();
+        console.log(currentPosition);
+        console.log(typeof width);
         currentPosition += width;
+        console.log("moveDown", currentPosition);
         draw();
         freeze();
     }
@@ -199,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
             random = nextRandom;
             nextRandom = Math.floor(Math.random() * blocks.length);
             currentTetromino = blocks[random][currentRotation];
-            currentPosition = 4;
+            currentPosition = Math.floor(width / 2 - 1);
             draw();
             displayShape();
             addScore();
@@ -388,11 +399,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resetGame() {
         //remove all tetrominos from main grid
-        for (let i = 0; i < (width * height); i++) {
+        /*for (let i = 0; i < (width * height); i++) {
             squares[i].classList.remove('taken');
             squares[i].classList.remove('tetromino');
             squares[i].style.backgroundColor = '';
-        }
+        }*/
         //remove all tetrominos from mini grid
         for (let i = 0; i < (displayWidth * displayWidth); i++) {
             displaySquares[i].classList.remove('taken');
@@ -417,13 +428,24 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(timerId);
 
         //reset falling tetromino
-        currentPosition = 4;
+        currentPosition = Math.floor(width / 2 - 1);
         currentRotation = 0;
 
         //randomly select a tetromino and its rotation
         random = Math.floor(Math.random() * blocks.length)
         currentTetromino = blocks[random][currentRotation];
 
+        //randomly select next tetromino
+        nextRandom = Math.floor(Math.random() * blocks.length);
+        console.log(typeof width);
+        //update should the user change the width and height
+        addDiv(width, height);
+        grid = document.querySelectorAll('.grid');
+        squares = Array.from(document.querySelectorAll('.grid div'));
+
+        console.log(squares);
+        parseInt(width);
+        console.log(typeof width);
     }
 
     let reset = document.getElementById("resetButton");
