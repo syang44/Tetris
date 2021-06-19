@@ -24,12 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let score = 0;
     let lines = 0;
     let level = 1;
+    let levelInput = document.getElementById('level').value;
     let speed = 1000;
     const colors = ['red', 'blue', 'orange', 'green', 'purple'];
     //initial starting width and height
     addDiv(width, height);
 
-    //Update width and height after user change
+    //Update grid specs after user change
     let container = document.getElementById("control");
     container.addEventListener('input', updateGrid);
 
@@ -37,11 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreDisplay = document.querySelector('#score');
     const lineDisplay = document.querySelector('#lines');
     const levelDisplay = document.querySelector('#level');
+    const levelInputDisplay = document.querySelector('#levelInput');
     const startButton = document.querySelector('#startButton');
 
     grid = document.querySelectorAll('.grid');
     squares = Array.from(document.querySelectorAll('.grid div'));
-    console.log(squares, "eventListener");
 
 
     //Update block placements when width changes
@@ -91,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //create array of square on the grid
         //grid = document.querySelectorAll('.grid');
         //squares = Array.from(document.querySelectorAll('.grid div'));
-        console.log(squares, "addDiv");
+
         //need to update block placement when grid changes
         updateBlocks();
     }
@@ -104,8 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("width").innerHTML = width;
         setHeight(document.getElementById("heightInput").value);
         document.getElementById("height").innerHTML = height;
-        console.log(typeof width);
-        console.log(typeof height, "we");
+
         //create divs for each cell
         addDiv(width, height);
 
@@ -114,6 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let parentHeight = height * 20;
         document.documentElement.style.setProperty(`--width`, parentWidth + 'px');
         document.documentElement.style.setProperty(`--height`, parentHeight + 'px');
+
+        //update level
+        levelInput = document.getElementById("levelSelect").value;
+        document.getElementById("levelInput").innerHTML = levelInput;
+        console.log(level, "updateGrid");
 
     }
 
@@ -152,10 +157,9 @@ document.addEventListener('DOMContentLoaded', () => {
     //Draw the tetromino
     function draw() {
         //Add class to each of the squares
-        console.log(squares, currentPosition);
-        console.log(typeof currentPosition);
+
         parseInt(currentPosition);
-        console.log(typeof currentPosition);
+
         currentTetromino.forEach(index => {
             squares[currentPosition + index].classList.add('tetromino');
             squares[currentPosition + index].style.backgroundColor = colors[random];
@@ -164,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //undraw the tetronimo
     function undraw() {
-        console.log("undraw", typeof currentPosition, currentPosition);
+
         currentTetromino.forEach(index => {
             squares[currentPosition + index].classList.remove('tetromino')
             squares[currentPosition + index].style.backgroundColor = '';
@@ -194,10 +198,9 @@ document.addEventListener('DOMContentLoaded', () => {
     //move tetromino down
     function moveDown() {
         undraw();
-        console.log(currentPosition);
-        console.log(typeof width);
+
         currentPosition += width;
-        console.log("moveDown", currentPosition);
+
         draw();
         freeze();
     }
@@ -352,9 +355,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 lines += 1;
                 lineDisplay.innerHTML = lines;
                 //update level
-                if (score % 100 === 0) { //CHANGE THRESHOLD
+                if (score % 10 === 0) { //CHANGE THRESHOLD
                     level++;
                     levelDisplay.innerHTML = level;
+                    levelInput = level;
+                    levelInputDisplay.innerHTML = levelInput;
                     //increase speed at which tetrominos fall
                     speed -= 100;
                     clearInterval(timerId);
@@ -420,11 +425,13 @@ document.addEventListener('DOMContentLoaded', () => {
         lineDisplay.innerHTML = lines;
 
         //reset level
-        level = 1;
+        level = levelInput;
+        console.log(level, "resetslider");
         levelDisplay.innerHTML = level;
+        console.log(levelDisplay.innerHTML, "display");
 
         //clear timer
-        speed = 1000;
+        speed = 1000 - (100 * level);
         clearInterval(timerId);
 
         //reset falling tetromino
@@ -437,15 +444,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //randomly select next tetromino
         nextRandom = Math.floor(Math.random() * blocks.length);
-        console.log(typeof width);
+
         //update should the user change the width and height
         addDiv(width, height);
         grid = document.querySelectorAll('.grid');
         squares = Array.from(document.querySelectorAll('.grid div'));
 
-        console.log(squares);
         parseInt(width);
-        console.log(typeof width);
+
     }
 
     let reset = document.getElementById("resetButton");
