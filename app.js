@@ -151,8 +151,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentRotation = 0;
 
     //randomly select a tetromino and its rotation
-    let random = Math.floor(Math.random() * blocks.length)
+    let random = Math.floor(Math.random() * blocks.length);
     let currentTetromino = blocks[random][currentRotation];
+    let holdTetromino = -1;
 
     //Draw the tetromino
     function draw() {
@@ -190,10 +191,55 @@ document.addEventListener('DOMContentLoaded', () => {
             case 40:
                 moveDown();
                 break;
+            case 72:
+                changeHold();
+                break;
         }
     }
 
     document.addEventListener('keydown', control);
+
+    function changeHold() {
+        //If this is the first tetromino and there is no tetromino in hold
+        if (holdTetromino == -1) {
+            undraw();
+            holdTetromino = random;
+            random = nextRandom;
+            nextRandom = Math.floor(Math.random() * blocks.length);
+            currentTetromino = blocks[random][currentRotation];
+            draw();
+            displayHold();
+            displayShape();
+        }
+    }
+
+    //display next tetromino in miniGrid
+    const displayHoldSquares = document.querySelectorAll('.control div');
+    const displayWidth = 4;
+    const displayIndex = 0;
+
+    //the tetrominos without rotations
+    const holdTetrominos = [
+        [1, displayWidth + 1, displayWidth * 2 + 1, 2], //L Tetromino
+        [0, displayWidth, displayWidth + 1, displayWidth * 2 + 1], //Z Tetromino
+        [1, displayWidth, displayWidth + 1, displayWidth + 2], //T Tetromino
+        [0, 1, displayWidth, displayWidth + 1], //O Tetromino
+        [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1] //I Tetromino
+    ]
+
+    //display next shape in miniGrid
+    function displayHold() {
+        //remove tetromino from entire grid
+        displayHoldSquares.forEach(square => {
+            square.classList.remove('tetromino');
+            square.style.backgroundColor = '';
+        });
+
+        holdTetrominos[holdTetromino].forEach(index => {
+            displayHoldSquares[displayIndex + index].classList.add('tetromino');
+            displayHoldSquares[displayIndex + index].style.backgroundColor = colors[holdTetromino];
+        })
+    }
 
     //move tetromino down
     function moveDown() {
@@ -298,8 +344,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //display next tetromino in miniGrid
     const displaySquares = document.querySelectorAll('.miniGrid div');
-    const displayWidth = 4;
-    const displayIndex = 0;
+    //const displayWidth = 4;
+    //const displayIndex = 0;
 
     //the tetrominos without rotations
     const nextTetrominos = [
