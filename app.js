@@ -413,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     level++;
                     levelDisplay.innerHTML = level;
                     levelInput = level;
-                    levelInputDisplay.innerHTML = levelInput;
+                    //levelInputDisplay.innerHTML = levelInput + "t";
                     //increase speed at which tetrominos fall
                     speed -= 100;
                     clearInterval(timerId);
@@ -470,6 +470,13 @@ document.addEventListener('DOMContentLoaded', () => {
             displaySquares[i].style.backgroundColor = '';
         }
 
+        //remove all tetrominos from hold grid
+        for (let i = 0; i < (displayWidth * displayWidth); i++) {
+            displayHoldSquares[i].classList.remove('taken');
+            displayHoldSquares[i].classList.remove('tetromino');
+            displayHoldSquares[i].style.backgroundColor = '';
+        }
+
         //reset score
         score = 0;
         scoreDisplay.innerHTML = score;
@@ -479,7 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
         lineDisplay.innerHTML = lines;
 
         //reset level
-        level = levelInput;
+        level = parseInt(levelInputDisplay.innerHTML);
         console.log(level, "resetslider");
         levelDisplay.innerHTML = level;
         console.log(levelDisplay.innerHTML, "display");
