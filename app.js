@@ -178,6 +178,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //assign functions to keyCodes
     function control(e) {
+        if (timerId == null) {
+            return;
+        }
         switch (e.keyCode) {
             case 37:
                 moveLeft();
