@@ -1,5 +1,5 @@
 //Code adapted from Copyright (c) 2020 Ania Kubow
-//Differences: html layout, css styling, dynamic width/height, levels, lines, restart game, globals.js
+//Differences: html layout, css styling, dynamic width/height, levels, lines, hold, restart game, instructions, globals.js
 
 import {
     lBlock,
@@ -89,11 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('grid').appendChild(newDiv);
         }
 
-        //MAY NEED TO MOVE THIS TO GLOBAL
-        //create array of square on the grid
-        //grid = document.querySelectorAll('.grid');
-        //squares = Array.from(document.querySelectorAll('.grid div'));
-
         //need to update block placement when grid changes
         updateBlocks();
     }
@@ -101,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
     //Update current width/height of grid
     function updateGrid() {
         //Get new value of width and height
-
         setWidth(document.getElementById("widthInput").value);
         document.getElementById("width").innerHTML = width;
         setHeight(document.getElementById("heightInput").value);
@@ -123,30 +117,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    //remove previous divs
-    /*var elem = document.getElementById('block');
-    while (elem != null) {
-        elem.parentNode.removeChild(elem);
-        elem = document.getElementById('block');
-    }*/
-
-    //dynamically create new divs
-    /*let size = width * height;
-    for (let i = 0; i < size; i++) {
-        let newDiv = document.createElement('div');
-        //newDiv.id = 'block'; 
-        //append each div to parent grid
-        document.getElementById('grid').appendChild(newDiv);
-
-    }*/
-    //MAY NEED TO MOVE THIS TO GLOBAL
     //create array of square on the grid
-    'use strict';
+    //use strict';
     var grid = document.querySelectorAll('.grid');
     var squares = Array.from(document.querySelectorAll('.grid div'));
-
-    //need to update block placement when grid changes
-    //updateBlocks();
 
     var currentPosition = Math.floor(width / 2 - 1); //represents where the block starts falling
     let currentRotation = 0;
@@ -159,9 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //Draw the tetromino
     function draw() {
         //Add class to each of the squares
-
         parseInt(currentPosition);
-
         currentTetromino.forEach(index => {
             squares[currentPosition + index].classList.add('tetromino');
             squares[currentPosition + index].style.backgroundColor = colors[random];
@@ -170,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //undraw the tetronimo
     function undraw() {
-
         currentTetromino.forEach(index => {
             squares[currentPosition + index].classList.remove('tetromino')
             squares[currentPosition + index].style.backgroundColor = '';
@@ -356,8 +327,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //display next tetromino in miniGrid
     const displaySquares = document.querySelectorAll('.miniGrid div');
-    //const displayWidth = 4;
-    //const displayIndex = 0;
 
     //the tetrominos without rotations
     const nextTetrominos = [
@@ -368,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
         [1, displayWidth + 1, displayWidth * 2 + 1, displayWidth * 3 + 1] //I Tetromino
     ]
 
-    //dispaly next shape in miniGrid
+    //display next shape in miniGrid
     function displayShape() {
         //remove tetromino from entire grid
         displaySquares.forEach(square => {
@@ -390,7 +359,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             draw();
             timerId = setInterval(moveDown, speed);
-            //nextRandom = Math.floor(Math.random() * blocks.length);
         }
         displayShape();
     });
@@ -413,11 +381,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 lines += 1;
                 lineDisplay.innerHTML = lines;
                 //update level
-                if (score % 50 === 0) { //CHANGE THRESHOLD
+                if (score % 50 === 0) {
                     level++;
                     levelDisplay.innerHTML = level;
                     levelInput = level;
-                    //levelInputDisplay.innerHTML = levelInput + "t";
                     //increase speed at which tetrominos fall
                     speed -= 100;
                     clearInterval(timerId);
@@ -448,6 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    //Click on start/pause button
     function toggleStart() {
         let inputs = document.getElementById("gridSpecs");
         if (inputs.style.display === "none") {
@@ -461,12 +429,6 @@ document.addEventListener('DOMContentLoaded', () => {
     inputs.addEventListener('click', toggleStart);
 
     function resetGame() {
-        //remove all tetrominos from main grid
-        /*for (let i = 0; i < (width * height); i++) {
-            squares[i].classList.remove('taken');
-            squares[i].classList.remove('tetromino');
-            squares[i].style.backgroundColor = '';
-        }*/
         //remove all tetrominos from mini grid
         for (let i = 0; i < (displayWidth * displayWidth); i++) {
             displaySquares[i].classList.remove('taken');
@@ -519,9 +481,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    //Click on reset button
     let reset = document.getElementById("resetButton");
     reset.addEventListener('click', resetGame);
 
+    //Click on instructions buttom
     function toggleInstructions() {
         let inputs = document.getElementById("instructionsText");
         if (inputs.style.display === "none") {
