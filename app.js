@@ -210,6 +210,14 @@ document.addEventListener('DOMContentLoaded', () => {
             draw();
             displayHold();
             displayShape();
+        } else {
+            undraw();
+            let temp = holdTetromino;
+            holdTetromino = random;
+            random = temp;
+            currentTetromino = blocks[random][currentRotation];
+            draw();
+            displayHold();
         }
     }
 
