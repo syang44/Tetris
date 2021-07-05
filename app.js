@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let level = 1;
     let levelInput = document.getElementById('level').value;
     let speed = 1200;
+    let gameOverState = false;
     const colors = ['red', 'blue', 'orange', 'green', 'purple'];
     //initial starting width and height
     addDiv(width, height);
@@ -152,6 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function control(e) {
         //prevents moving/holding when game is paused
         if (timerId == null) return;
+        if (gameOverState) return;
 
         switch (e.keyCode) {
             case 37:
@@ -407,11 +409,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function toggleGameOver() {
+        let input = document.getElementById("gameOver");
+        if (input.style.display === "none") {
+            input.style.display = "block";
+            gameOverState = true;
+        } else {
+            input.style.display = "none";
+            gameOverState = false;
+        }
+    }
+
     //game over
     function gameOver() {
         if (currentTetromino.some(index => squares[currentPosition + index].classList.contains('taken'))) {
-            scoreDisplay.innerHTML = 'gameover';
             clearInterval(timerId);
+            toggleGameOver();
         }
     }
 
@@ -478,6 +491,8 @@ document.addEventListener('DOMContentLoaded', () => {
         squares = Array.from(document.querySelectorAll('.grid div'));
 
         parseInt(width);
+
+        toggleGameOver();
 
     }
 

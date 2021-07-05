@@ -123,11 +123,18 @@ input[type="range"] {
 }
 
 .instructions {
-    margin-top: 40px;
+    margin-top: 20px;
     text-align: center;
 }
 
 .instructionsText {
     display: none;
     text-align: inherit;
+}
+
+.gameOver {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    display: none;
 }
