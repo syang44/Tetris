@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let lines = 0;
     let level = 1;
     let levelInput = document.getElementById('level').value;
-    let speed = 1000;
+    let speed = 1200;
     const colors = ['red', 'blue', 'orange', 'green', 'purple'];
     //initial starting width and height
     addDiv(width, height);
@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const levelDisplay = document.querySelector('#level');
     const levelInputDisplay = document.querySelector('#levelInput');
     const startButton = document.querySelector('#startButton');
+    const instructionsButton = document.querySelector('#instructionsButton');
 
     grid = document.querySelectorAll('.grid');
     squares = Array.from(document.querySelectorAll('.grid div'));
@@ -178,9 +179,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //assign functions to keyCodes
     function control(e) {
-        if (timerId == null) {
-            return;
-        }
+        //prevents moving/holding when game is paused
+        if (timerId == null) return;
+
         switch (e.keyCode) {
             case 37:
                 moveLeft();
@@ -412,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 lines += 1;
                 lineDisplay.innerHTML = lines;
                 //update level
-                if (score % 10 === 0) { //CHANGE THRESHOLD
+                if (score % 50 === 0) { //CHANGE THRESHOLD
                     level++;
                     levelDisplay.innerHTML = level;
                     levelInput = level;
@@ -495,7 +496,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(levelDisplay.innerHTML, "display");
 
         //clear timer
-        speed = 1000 - (100 * level);
+        speed = 1200 - (100 * level);
         clearInterval(timerId);
 
         //reset falling tetromino
@@ -520,5 +521,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let reset = document.getElementById("resetButton");
     reset.addEventListener('click', resetGame);
+
+    function toggleInstructions() {
+        let inputs = document.getElementById("instructionsText");
+        if (inputs.style.display === "none") {
+            inputs.style.display = "block";
+        } else {
+            inputs.style.display = "none";
+        }
+    }
+
+    let instructionInput = document.getElementById("instructionsButton");
+    instructionInput.addEventListener('click', toggleInstructions);
 
 });

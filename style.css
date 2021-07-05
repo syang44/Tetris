@@ -33,7 +33,6 @@ button {
 .container {
     display: flex;
     justify-content: center;
-
 }
 
 .grid {
@@ -73,7 +72,6 @@ button {
 }
 
 .control {
-    margin-left: 50px;
     width: 80px;
     height: 80px;
     display: flex;
@@ -105,7 +103,7 @@ input[type="range"] {
     margin-top: 10px;
 }
 
-.gridLabel {
+.nextLabel {
     margin-top: 0;
     margin-left: 50px;
     margin-bottom: 0;
@@ -113,4 +111,23 @@ input[type="range"] {
     color: white;
     width: 80px;
     background-color: #3c635d;
+}
+
+.holdLabel {
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+    color: white;
+    width: 80px;
+    background-color: #3c635d;
+}
+
+.instructions {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.instructionsText {
+    display: none;
+    text-align: inherit;
 }

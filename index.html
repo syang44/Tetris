@@ -36,7 +36,7 @@
 
         <div class="input" id="input">
 
-            <p class="gridLabel">Hold (H)</p>
+            <p class="holdLabel">Hold (H)</p>
 
             <div class="control" id="control">
 
@@ -46,7 +46,6 @@
                         document.getElementById('control').appendChild(newDiv);
                     }
                 </script>
-
 
                 <button class="startButton" id="startButton">Start/Pause</button>
 
@@ -59,7 +58,7 @@
                         data-sizing="px">
 
                     <label for="levelInput">Level: <span id="levelInput">1</span></label>
-                    <input id="levelSelect" type="range" name="levelSelect" min="1" max="9" value="1">
+                    <input id="levelSelect" type="range" name="levelSelect" min="1" max="10" value="1">
 
                     <button class="reset" id="resetButton">Reset</button>
                 </div>
@@ -67,14 +66,13 @@
             </div>
         </div>
 
-        <!--<div class="game">-->
         <div class="grid" id="grid">
             <!--grid squares get dynamically added here-->
         </div>
-        <!--</div>-->
+
         <div class="output" id="output">
 
-            <p class="gridLabel">Next up</p>
+            <p class="nextLabel">Next up</p>
 
             <div class="miniGrid" id="miniGrid">
 
@@ -89,21 +87,24 @@
                     <p>Score: <span id="score">0</span></p>
                     <p>Level: <span id="level">1</span></p>
                     <p>Lines: <span id="lines">0</span></p>
-                    <!-- <button id="startButton">Start/Pause</button>
 
-                <div class="gridSpecs" id="gridSpecs">
-                    <label for="width">Width: <span id="width">10</span></label>
-                    <input id="widthInput" type="range" name="widthInput" min="8" max="15" value="10" data-sizing="px">
-
-                    <label for="height">Height: <span id="height">20</span></label>
-                    <input id="heightInput" type="range" name="heightInput" min="10" max="25" value="20"
-                        data-sizing="px">
-                    <button id="resetButton">Reset</button>
-                </div> -->
 
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="instructions">
+
+        <button class="instructionsButton" id="instructionsButton">Instructions</button>
+
+        <div class="instructionsText" id="instructionsText">
+            <p>Use arrow keys to move around</p>
+            <p>Press up to rotate</p>
+            <p>Press (H) to hold</p>
+            <p>Press reset after changing settings/gameover to play again</p>
+        </div>
+
     </div>
 
 </body>
