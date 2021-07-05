@@ -73,7 +73,19 @@ button {
 }
 
 .control {
+    margin-left: 50px;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #61a197;
+    border-radius: 2px;
     margin-right: 50px;
+}
+
+.control div {
+    height: 20px;
+    width: 20px;
 }
 
 .gridSpecs {
@@ -83,4 +95,22 @@ button {
 
 input[type="range"] {
     width: 100px;
+}
+
+.startButton {
+    margin-top: 30px;
+}
+
+.reset {
+    margin-top: 10px;
+}
+
+.gridLabel {
+    margin-top: 0;
+    margin-left: 50px;
+    margin-bottom: 0;
+    text-align: center;
+    color: white;
+    width: 80px;
+    background-color: #3c635d;
 }

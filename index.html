@@ -34,23 +34,37 @@
 
     <div class="container">
 
-        <div class="control" id="control">
+        <div class="input" id="input">
 
-            <button id="startButton">Start/Pause</button>
+            <p class="gridLabel">Hold</p>
 
-            <div class="gridSpecs" id="gridSpecs">
-                <label for="width">Width: <span id="width">10</span></label>
-                <input id="widthInput" type="range" name="widthInput" min="8" max="15" value="10" data-sizing="px">
+            <div class="control" id="control">
 
-                <label for="height">Height: <span id="height">20</span></label>
-                <input id="heightInput" type="range" name="heightInput" min="10" max="25" value="20" data-sizing="px">
+                <script>
+                    for (let i = 0; i < 16; i++) {
+                        let newDiv = document.createElement('div');
+                        document.getElementById('control').appendChild(newDiv);
+                    }
+                </script>
 
-                <label for="levelInput">Level: <span id="levelInput">1</span></label>
-                <input id="levelSelect" type="range" name="levelSelect" min="1" max="9" value="1">
 
-                <button id="resetButton">Reset</button>
+                <button class="startButton" id="startButton">Start/Pause</button>
+
+                <div class="gridSpecs" id="gridSpecs">
+                    <label for="width">Width: <span id="width">10</span></label>
+                    <input id="widthInput" type="range" name="widthInput" min="8" max="15" value="10" data-sizing="px">
+
+                    <label for="height">Height: <span id="height">20</span></label>
+                    <input id="heightInput" type="range" name="heightInput" min="10" max="25" value="20"
+                        data-sizing="px">
+
+                    <label for="levelInput">Level: <span id="levelInput">1</span></label>
+                    <input id="levelSelect" type="range" name="levelSelect" min="1" max="9" value="1">
+
+                    <button class="reset" id="resetButton">Reset</button>
+                </div>
+
             </div>
-
         </div>
 
         <!--<div class="game">-->
@@ -58,20 +72,24 @@
             <!--grid squares get dynamically added here-->
         </div>
         <!--</div>-->
+        <div class="output" id="output">
 
-        <div class="miniGrid" id="miniGrid">
-            <script>
-                for (let i = 0; i < 16; i++) {
-                    let newDiv = document.createElement('div');
-                    document.getElementById('miniGrid').appendChild(newDiv);
-                }
-            </script>
+            <p class="gridLabel">Next up</p>
 
-            <div class="status">
-                <p>Score: <span id="score">0</span></p>
-                <p>Level: <span id="level">1</span></p>
-                <p>Lines: <span id="lines">0</span></p>
-                <!-- <button id="startButton">Start/Pause</button>
+            <div class="miniGrid" id="miniGrid">
+
+                <script>
+                    for (let i = 0; i < 16; i++) {
+                        let newDiv = document.createElement('div');
+                        document.getElementById('miniGrid').appendChild(newDiv);
+                    }
+                </script>
+
+                <div class="status">
+                    <p>Score: <span id="score">0</span></p>
+                    <p>Level: <span id="level">1</span></p>
+                    <p>Lines: <span id="lines">0</span></p>
+                    <!-- <button id="startButton">Start/Pause</button>
 
                 <div class="gridSpecs" id="gridSpecs">
                     <label for="width">Width: <span id="width">10</span></label>
@@ -83,6 +101,7 @@
                     <button id="resetButton">Reset</button>
                 </div> -->
 
+                </div>
             </div>
         </div>
     </div>
