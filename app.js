@@ -409,22 +409,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function toggleGameOver() {
-        let input = document.getElementById("gameOver");
-        if (input.style.display === "none") {
-            input.style.display = "block";
-            gameOverState = true;
-        } else {
-            input.style.display = "none";
-            gameOverState = false;
-        }
-    }
-
     //game over
     function gameOver() {
         if (currentTetromino.some(index => squares[currentPosition + index].classList.contains('taken'))) {
             clearInterval(timerId);
-            toggleGameOver();
+            gameOverState = true;
+            let input = document.getElementById("gameOver");
+            input.style.display = "block";
         }
     }
 
@@ -492,7 +483,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         parseInt(width);
 
-        toggleGameOver();
+        gameOverState = false;
+        let input = document.getElementById("gameOver");
+        input.style.display = "none";
 
     }
 
